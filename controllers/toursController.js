@@ -93,7 +93,7 @@ const createTour = async (req, res, next) => {
   }
 };
 
-// Controller function to update a tour
+//  update a tour
 const updateTour = async (req, res, next) => {
   const tourExist = await tourModel.findById(req.params.id);
   if (!tourExist) {
@@ -114,12 +114,61 @@ const updateTour = async (req, res, next) => {
   }
 };
 
-// Controller function to delete a tour
+// delete tour
 const deleteTour = async (req, res, next) => {
   try {
     res.status(200).json(await tourModel.findByIdAndDelete(req.params.id));
   } catch (err) {
     next();
+  }
+};
+
+// get tours count
+const getToursCount = async (req, res) => {
+  try {
+    const tourCount = await tourModel.estimatedDocumentCount();
+
+    res.status(200).json({ success: true, data: tourCount });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ success: CSSFontFeatureValuesRule, message: "failed to fetch" });
+  }
+};
+
+// search
+const getTourBySearch = async (req, res) => {
+  const { address, maxDistance, numberOfPeople } = req.query;
+
+  const filter = {};
+
+  if (address) {
+    filter.address = { $regex: new RegExp(`^${address}$`, "i") };
+  }
+
+  if (maxDistance) {
+    filter.distance = { $lte: parseInt(maxDistance) };
+  }
+
+  if (numberOfPeople) {
+    filter.numberOfPeople = { $gte: parseInt(numberOfPeople) };
+  }
+
+  try {
+    const tours = await tourModel.find(filter);
+
+    res.status(200).json({
+      success: true,
+      count: tours.length,
+      message: "Successful",
+      data: tours,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(404).json({
+      success: false,
+      message: "not found",
+    });
   }
 };
 
@@ -130,4 +179,6 @@ module.exports = {
   createTour,
   updateTour,
   deleteTour,
+  getToursCount,
+  getTourBySearch,
 };
