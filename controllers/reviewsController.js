@@ -2,13 +2,14 @@ const ReviewModel = require("../models/ReviewModel");
 const TourModel = require("../models/TourModel");
 
 const createReview = async (req, res) => {
-  const tourId = req.params.tourId;
-  const newReview = new ReviewModel({ ...req.body });
+  // const tourId = req.params.tourId;
+  const newReview = new ReviewModel({ ...req.body, ...{ tourId: tourId } });
 
   try {
     const savedReview = await newReview.save();
 
-    await TourModel.findByIdAndUpdate(tourId, {
+    //save new review on the array reviews of the tour
+    await TourModel.findByIdAndUpdate(req.params.tourId, {
       $push: { reviews: savedReview._id },
     });
 

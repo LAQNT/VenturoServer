@@ -8,14 +8,19 @@ const toursRouter = require("./endpoints/Tours");
 const usersRouter = require("./endpoints/Users");
 const authRouter = require("./endpoints/Auth");
 const reviewsRouter = require("./endpoints/Reviews");
+const bookingRouter = require("./endpoints/Booking");
 
 require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT;
 
+const corsOptions = {
+  origin: true,
+  credentials: true,
+};
 // Middlewares
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser());
@@ -27,9 +32,10 @@ app.use(debug.logUrl);
 app.use(debug.errorHandler);
 
 app.use("/api/v1/tours", toursRouter);
-app.use("api/v1/users", usersRouter);
-app.use("api/v1/auth", authRouter);
-app.use("api/v1/reviews", reviewsRouter);
+app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/review", reviewsRouter);
+app.use("/api/v1/booking", bookingRouter);
 
 // Start Mongoose e Server
 mongoose
