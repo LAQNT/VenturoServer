@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { createReview } = require("./../controllers/reviewsController");
 const { verifyUser } = require("../utils/verifyToken");
+const { createBooking } = require("../controllers/bookingController");
 
-router.post("/:tourId", verifyUser, createReview);
+router.post("/", verifyUser, createBooking);
 
 module.exports = router;

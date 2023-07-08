@@ -9,6 +9,7 @@ const getTours = async (req, res, next) => {
 
     const tours = await tourModel
       .find()
+      .populate("reviews")
       .skip(page * 8)
       .limit(8);
 
@@ -27,11 +28,14 @@ const getTours = async (req, res, next) => {
   }
 };
 
-//  get featured tours
+//  get featured/best deal tours
 const getFeaturedTours = async (req, res, next) => {
-  console.log("ima here");
+  // console.log("ima here");
   try {
-    const tours = await tourModel.find({ featured: true }).limit(8);
+    const tours = await tourModel
+      .find({ featured: true })
+      .populate("reviews")
+      .limit(8);
 
     res.status(200).json({
       success: true,
@@ -51,7 +55,7 @@ const getFeaturedTours = async (req, res, next) => {
 //  get tour by ID
 const getTourById = async (req, res, next) => {
   try {
-    const tour = await tourModel.findById(req.params.id);
+    const tour = await tourModel.findById(req.params.id).populate("reviews");
 
     if (!tour) {
       res.status(404).json({
@@ -155,7 +159,7 @@ const getTourBySearch = async (req, res) => {
   }
 
   try {
-    const tours = await tourModel.find(filter);
+    const tours = await tourModel.find(filter).populate("reviews");
 
     res.status(200).json({
       success: true,

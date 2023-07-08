@@ -9,7 +9,6 @@ const {
 const { verifyAdmin, verifyUser } = require("../utils/verifyToken");
 
 router.get("/", verifyAdmin, getUsers);
-// router.get("/", createtUser);
 router.get("/:id", verifyUser, getUserById);
 router.put("/:id", verifyUser, updateUser);
 router.delete("/:id", verifyUser, deleteUser);
