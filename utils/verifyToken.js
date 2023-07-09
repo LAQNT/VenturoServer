@@ -20,7 +20,7 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-const verifyUser = (res, req, next) => {
+const verifyUser = (req, res, next) => {
   verifyToken(req, res, next, () => {
     if (req.user.id === req.params.id || req.user.role === "admin") {
       next();
@@ -32,7 +32,7 @@ const verifyUser = (res, req, next) => {
   });
 };
 
-const verifyAdmin = (res, req, next) => {
+const verifyAdmin = (req, res, next) => {
   verifyToken(req, res, next, () => {
     if (req.user.role === "admin") {
       next();

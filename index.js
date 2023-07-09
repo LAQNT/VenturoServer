@@ -41,7 +41,7 @@ app.use("/api/v1/booking", bookingRouter);
 mongoose
   .connect(process.env.MONGODB_CONNECT)
   .then((response) => {
-    console.log("DB Connected...");
+    console.log("MongoDB Connected...");
     app.listen(port, async () =>
       console.log("Server listening on port " + port)
     );
