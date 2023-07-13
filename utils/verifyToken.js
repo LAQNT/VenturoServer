@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
-  const token = req.cookies.accessToken;
+  console.log(req, "HEREEEEEE");
+  // const token = req.cookies.accessToken;
+  const token = req.headers.data;
 
   if (!token) {
     return res
@@ -44,4 +46,4 @@ const verifyAdmin = (req, res, next) => {
   });
 };
 
-module.exports = { verifyToken, verifyAdmin, verifyUser };
+module.exports = { verifyToken, verifyUser, verifyAdmin };

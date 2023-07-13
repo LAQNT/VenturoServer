@@ -6,9 +6,9 @@ const {
   updateUser,
   deleteUser,
 } = require("../controllers/usersController");
-const { verifyAdmin, verifyUser } = require("../utils/verifyToken");
+const { verifyUser } = require("../utils/verifyToken");
 
-router.get("/", verifyAdmin, getUsers);
+router.get("/", getUsers);
 router.get("/:id", verifyUser, getUserById);
 router.put("/:id", verifyUser, updateUser);
 router.delete("/:id", verifyUser, deleteUser);

@@ -11,7 +11,7 @@ const tourSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    address: {
+    country: {
       type: String,
       required: true,
     },
@@ -47,7 +47,7 @@ const tourSchema = new mongoose.Schema(
       },
     ],
 
-    featured: {
+    bestDeal: {
       type: Boolean,
       default: false,
     },

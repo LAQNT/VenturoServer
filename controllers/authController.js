@@ -51,26 +51,22 @@ const login = async (req, res) => {
         .json({ success: false, message: "Incorrect email or password" });
     }
 
-    const { password, role, ...rest } = user._doc;
-
     // generate jwt token
     const token = jwt.sign(
       {
         id: user._id,
+        email: user.email,
+        username: user.username,
         role: user.role,
       },
       process.env.APP_JWT_SECRET_KEY,
       { expiresIn: "15d" }
     );
 
-    // set token in browser cookies
-    res
-      .cookie("accessToken", token, {
-        httpOnly: true,
-        expires: token.expiresIn,
-      })
-      .status(200)
-      .json({ token, data: { ...rest }, role });
+    res.header("authorization", token).status(200).send({
+      message: "login effettuato con successo",
+      token,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Failed to login" });

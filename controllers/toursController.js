@@ -30,7 +30,6 @@ const getTours = async (req, res, next) => {
 
 //  get featured/best deal tours
 const getFeaturedTours = async (req, res, next) => {
-  // console.log("ima here");
   try {
     const tours = await tourModel
       .find({ featured: true })
@@ -142,24 +141,18 @@ const getToursCount = async (req, res) => {
 
 // search
 const getTourBySearch = async (req, res) => {
-  const { address, maxDistance, numberOfPeople } = req.query;
-
-  const filter = {};
-
-  if (address) {
-    filter.address = { $regex: new RegExp(`^${address}$`, "i") };
-  }
-
-  if (maxDistance) {
-    filter.distance = { $lte: parseInt(maxDistance) };
-  }
-
-  if (numberOfPeople) {
-    filter.numberOfPeople = { $gte: parseInt(numberOfPeople) };
-  }
+  const country = new RegExp(req.query.country, "i");
+  const maxDistance = parseInt(req.query.distance);
+  const numberOfPeople = parseInt(req.query.numberOfPeople);
 
   try {
-    const tours = await tourModel.find(filter).populate("reviews");
+    const tours = await tourModel
+      .find({
+        country,
+        distance: { $lte: maxDistance },
+        numberOfPeople: { $gte: numberOfPeople },
+      })
+      .populate("reviews");
 
     res.status(200).json({
       success: true,
