@@ -28,7 +28,7 @@ const getReviews = async (req, res) => {
   const tourId = req.params.tourId;
 
   try {
-    const reviews = await ReviewModel.find({ tourId });
+    const reviews = await ReviewModel.find({ tourId }).sort({ createdAt: -1 });
     return res.status(200).json({ success: true, data: reviews });
   } catch (error) {
     return res
