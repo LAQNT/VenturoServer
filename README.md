@@ -25,10 +25,6 @@
 - MongoDB
 - JWT
 
-## Screenshots
-
-📷 
-
 ## Installation
 
 ⚙️ To set up this project locally, follow these steps:
