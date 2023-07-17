@@ -1,4 +1,3 @@
-// Import the usersModel
 const userModel = require("../models/UserModel");
 const express = require("express");
 

@@ -3,6 +3,25 @@ const tourModel = require("../models/TourModel");
 const express = require("express");
 
 // get all tours
+const getAllTours = async (req, res, next) => {
+  try {
+    const tours = await tourModel.find().populate("reviews");
+
+    res.status(200).json({
+      success: true,
+      count: tours.length,
+      message: "Successful",
+      data: tours,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch tours",
+    });
+  }
+};
+
 const getTours = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page);
@@ -32,7 +51,7 @@ const getTours = async (req, res, next) => {
 const getFeaturedTours = async (req, res, next) => {
   try {
     const tours = await tourModel
-      .find({ featured: true })
+      .find({ bestDeal: true })
       .populate("reviews")
       .limit(8);
 
@@ -171,6 +190,7 @@ const getTourBySearch = async (req, res) => {
 
 module.exports = {
   getTours,
+  getAllTours,
   getFeaturedTours,
   getTourById,
   createTour,

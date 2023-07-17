@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   getTours,
+  getAllTours,
   getFeaturedTours,
   getToursCount,
   getTourById,
@@ -14,6 +15,7 @@ const {
 // const { verifyAdmin } = require("../utils/verifyToken");
 
 router.get("/", getTours);
+router.get("/alltours", getAllTours);
 router.get("/:id", getTourById);
 router.get("/search/featuredTours", getFeaturedTours);
 router.get("/search/getToursCount", getToursCount);
