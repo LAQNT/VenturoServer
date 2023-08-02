@@ -4,13 +4,13 @@
 
 ## Description
 
-📚 This repository contains the backend code for my capstone project for the Epicode Bootcamp. The project is an application that search and organize tours.
+📚 This repository contains the backend code for my capstone project for the Epicode Bootcamp. The project is an application that search and book tours.
 
 ## Features
 
 ✨ User authentication and registration
 
-✨ Back office with create, read, update, and delete functionality
+✨ Back office with create, read, update, and delete functionality for each tour
 
 ✨ User can post reviews for every tour
 
